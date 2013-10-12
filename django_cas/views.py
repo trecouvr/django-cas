@@ -3,7 +3,13 @@ from datetime import datetime
 from urllib import urlencode
 from urlparse import urljoin
 
-from django.http import get_host, HttpResponseRedirect, HttpResponseForbidden, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponse
+try:
+    from django.http import get_host
+except ImportError:
+    # django 1.5
+    def get_host(r):
+        return r.get_host()
 from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django_cas.models import PgtIOU
